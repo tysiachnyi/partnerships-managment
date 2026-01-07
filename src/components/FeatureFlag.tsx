@@ -11,7 +11,7 @@ export const FeatureFlag = ({ name, description }: Props) => {
       <Card.Header>
         <Heading size="md">{name}</Heading>
       </Card.Header>
-      <Card.Body color="fg.muted">{description}</Card.Body>
+      <Card.Body color="fg.muted">{description || " "}</Card.Body>
     </Card.Root>
   );
 };
