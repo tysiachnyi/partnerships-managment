@@ -11,7 +11,6 @@ const router = createBrowserRouter([
         index: true,
         element: <App />,
       },
-      // Add more child routes here
     ],
   },
 ]);
