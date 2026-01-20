@@ -1,9 +1,8 @@
-"use client"
-
 import type { IconButtonProps } from "@chakra-ui/react"
 import { IconButton } from "@chakra-ui/react"
 import * as React from "react"
 import { FiMoon, FiSun } from "react-icons/fi"
+import { ColorModeContext, useColorMode } from "./utils"
 
 export type ColorMode = "light" | "dark"
 
@@ -13,7 +12,6 @@ export interface UseColorModeReturn {
   toggleColorMode: () => void
 }
 
-const ColorModeContext = React.createContext<UseColorModeReturn | undefined>(undefined)
 
 export interface ColorModeProviderProps {
   children: React.ReactNode
@@ -62,29 +60,15 @@ export function ColorModeProvider({ children, defaultValue = "light" }: ColorMod
   )
 }
 
-export function useColorMode(): UseColorModeReturn {
-  const context = React.useContext(ColorModeContext)
-  if (!context) {
-    throw new Error("useColorMode must be used within a ColorModeProvider")
-  }
-  return context
-}
-
-export function useColorModeValue<T>(light: T, dark: T) {
-  const { colorMode } = useColorMode()
-  return colorMode === "dark" ? dark : light
-}
 
 export function ColorModeIcon() {
   const { colorMode } = useColorMode()
   return colorMode === "dark" ? <FiMoon /> : <FiSun />
 }
 
-interface ColorModeButtonProps extends Omit<IconButtonProps, "aria-label"> {}
-
 export const ColorModeButton = React.forwardRef<
   HTMLButtonElement,
-  ColorModeButtonProps
+  Omit<IconButtonProps, "aria-label">
 >(function ColorModeButton(props, ref) {
   const { toggleColorMode } = useColorMode()
   return (
@@ -96,9 +80,9 @@ export const ColorModeButton = React.forwardRef<
       ref={ref}
       {...props}
       css={{
-        _icon: {
-          width: "5",
-          height: "5",
+        "& svg": {
+          width: "1.25rem",
+          height: "1.25rem",
         },
       }}
     >
